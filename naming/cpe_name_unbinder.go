@@ -8,10 +8,10 @@ import (
 )
 
 func UnbindCPE(c string) (common.WellFormedName, error) {
-	wfn1, err1 := naming.UnbindURI(c)
-	wfn2, err2 := naming.UnbindFS(c)
+	wfn1, err1 := UnbindURI(c)
+	wfn2, err2 := UnbindFS(c)
 	if err1 != nil && err2 != nil {
-		return common.WellFormedName{}, errors.Wrap(err, "Failed to parse CPE")
+		return common.WellFormedName{}, errors.Wrap(err1, "Failed to parse CPE")
 	}
 	if err1 == nil {
 		return wfn1, nil
@@ -20,9 +20,8 @@ func UnbindCPE(c string) (common.WellFormedName, error) {
 		return wfn2, nil
 	}
 
-	return common.WellFormedName{}, errors.Wrap(err, "Failed to parse CPE")
+	return common.WellFormedName{}, errors.New("Failed to parse CPE")
 }
-
 
 // UnbindURI is a top level function used to unbind a URI to a WFN.
 // @param uri String representing the URI to be unbound.

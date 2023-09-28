@@ -58,7 +58,7 @@ func IsEqual(source, target common.WellFormedName) bool {
 // @return true if the names are equal, false otherwise
 func IsEqualExcludingVersion(source, target common.WellFormedName) bool {
 	// if every pairwise comparison is equal, the names are equal.
-	results := CompareWFNsWithoutVersion(source, target)
+	results := CompareWFNsExcludingVersion(source, target)
 	for _, result := range results {
 		if result != EQUAL {
 			return false
