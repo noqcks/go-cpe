@@ -7,6 +7,23 @@ import (
 	"github.com/pkg/errors"
 )
 
+func UnbindCPE(c string) (common.WellFormedName, error) {
+	wfn1, err1 := naming.UnbindURI(c)
+	wfn2, err2 := naming.UnbindFS(c)
+	if err1 != nil && err2 != nil {
+		return common.WellFormedName{}, errors.Wrap(err, "Failed to parse CPE")
+	}
+	if err1 == nil {
+		return wfn1, nil
+	}
+	if err2 == nil {
+		return wfn2, nil
+	}
+
+	return common.WellFormedName{}, errors.Wrap(err, "Failed to parse CPE")
+}
+
+
 // UnbindURI is a top level function used to unbind a URI to a WFN.
 // @param uri String representing the URI to be unbound.
 // @return WellFormedName representing the unbound URI.
