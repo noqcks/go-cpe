@@ -52,6 +52,21 @@ func IsEqual(source, target common.WellFormedName) bool {
 	return true
 }
 
+// IsEqualExcludingVersion tests two Well Formed Names for equality.
+// @param source Source WFN
+// @param target Target WFN
+// @return true if the names are equal, false otherwise
+func IsEqualExcludingVersion(source, target common.WellFormedName) bool {
+	// if every pairwise comparison is equal, the names are equal.
+	results := CompareWFNsWithoutVersion(source, target)
+	for _, result := range results {
+		if result != EQUAL {
+			return false
+		}
+	}
+	return true
+}
+
 // IsSubset tests if the source Well Formed Name is a subset of the target Well Formed
 // Name.
 // @param source Source WFN
@@ -95,6 +110,26 @@ func CompareWFNs(source, target common.WellFormedName) map[string]Relation {
 	result[common.AttributeVendor] = compare(source.Get(common.AttributeVendor), target.Get(common.AttributeVendor))
 	result[common.AttributeProduct] = compare(source.Get(common.AttributeProduct), target.Get(common.AttributeProduct))
 	result[common.AttributeVersion] = compare(source.Get(common.AttributeVersion), target.Get(common.AttributeVersion))
+	result[common.AttributeUpdate] = compare(source.Get(common.AttributeUpdate), target.Get(common.AttributeUpdate))
+	result[common.AttributeEdition] = compare(source.Get(common.AttributeEdition), target.Get(common.AttributeEdition))
+	result[common.AttributeLanguage] = compare(source.Get(common.AttributeLanguage), target.Get(common.AttributeLanguage))
+	result[common.AttributeSwEdition] = compare(source.Get(common.AttributeSwEdition), target.Get(common.AttributeSwEdition))
+	result[common.AttributeTargetSw] = compare(source.Get(common.AttributeTargetSw), target.Get(common.AttributeTargetSw))
+	result[common.AttributeTargetHw] = compare(source.Get(common.AttributeTargetHw), target.Get(common.AttributeTargetHw))
+	result[common.AttributeOther] = compare(source.Get(common.AttributeOther), target.Get(common.AttributeOther))
+	return result
+}
+
+// CompareWFNsExcludingVersion compares each attribute value pair in two Well Formed Names
+// without comparing the version
+// @param source Source WFN
+// @param target Target WFN
+// @return A Hashtable mapping attribute string to attribute value Relation
+func CompareWFNsExcludingVersion(source, target common.WellFormedName) map[string]Relation {
+	result := map[string]Relation{}
+	result[common.AttributePart] = compare(source.Get(common.AttributePart), target.Get(common.AttributePart))
+	result[common.AttributeVendor] = compare(source.Get(common.AttributeVendor), target.Get(common.AttributeVendor))
+	result[common.AttributeProduct] = compare(source.Get(common.AttributeProduct), target.Get(common.AttributeProduct))
 	result[common.AttributeUpdate] = compare(source.Get(common.AttributeUpdate), target.Get(common.AttributeUpdate))
 	result[common.AttributeEdition] = compare(source.Get(common.AttributeEdition), target.Get(common.AttributeEdition))
 	result[common.AttributeLanguage] = compare(source.Get(common.AttributeLanguage), target.Get(common.AttributeLanguage))
