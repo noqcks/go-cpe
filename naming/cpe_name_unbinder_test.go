@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/knqyf263/go-cpe/common"
+	"github.com/noqcks/go-cpe/common"
 	"github.com/pkg/errors"
 )
 

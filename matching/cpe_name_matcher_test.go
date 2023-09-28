@@ -3,7 +3,7 @@ package matching
 import (
 	"testing"
 
-	"github.com/knqyf263/go-cpe/common"
+	"github.com/noqcks/go-cpe/common"
 )
 
 func TestMatcher(t *testing.T) {
